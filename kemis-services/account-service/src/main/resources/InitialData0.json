@@ -1,0 +1,159 @@
+[
+	{
+
+		"email": "testAdmin@gmail.com",
+		"password":"testAdmin",
+		"type":"Admin"
+	},
+	{
+
+	   "email": "test1@gmail.com",
+	   "password":"test1",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test2@gmail.com",
+	   "password":"test2",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test3@gmail.com",
+	   "password":"test3",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test4@gmail.com",
+	   "password":"test4",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test5@gmail.com",
+	   "password":"test5",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test6@gmail.com",
+	   "password":"test6",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test7@gmail.com",
+	   "password":"test7",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test8@gmail.com",
+	   "password":"test8",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test9@gmail.com",
+	   "password":"test9",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test10@gmail.com",
+	   "password":"test10",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test11@gmail.com",
+	   "password":"test11",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test12@gmail.com",
+	   "password":"test12",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test13@gmail.com",
+	   "password":"test13",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test14@gmail.com",
+	   "password":"test14",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test15@gmail.com",
+	   "password":"test15",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test16@gmail.com",
+	   "password":"test16",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test17@gmail.com",
+	   "password":"test17",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test18@gmail.com",
+	   "password":"test18",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test19@gmail.com",
+	   "password":"test19",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test20@gmail.com",
+	   "password":"test20",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test21@gmail.com",
+	   "password":"test21",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test22@gmail.com",
+	   "password":"test22",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test23@gmail.com",
+	   "password":"test23",
+	   "type":"Seller"
+	},
+	{
+
+	   "email": "test24@gmail.com",
+	   "password":"test24",
+	   "type":"Buyer"
+	},
+	{
+
+	   "email": "test25@gmail.com",
+	   "password":"test25",
+	   "type":"Buyer"
+	}
+
+]

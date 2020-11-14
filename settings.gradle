@@ -1,0 +1,8 @@
+rootProject.name='Kemis-Shop-Microservice'
+include 'kemis-cloud-infra:eureka-server'
+include 'kemis-cloud-infra:configuration-server'
+include 'kemis-cloud-infra:proxy-server'
+include 'kemis-services:order-service'
+include 'kemis-services:account-service'
+include 'kemis-services:catalog-service'
+

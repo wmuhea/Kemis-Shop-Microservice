@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/kemis-cloud-infra" />
+            <option value="$PROJECT_DIR$/kemis-cloud-infra/configuration-server" />
+            <option value="$PROJECT_DIR$/kemis-cloud-infra/eureka-server" />
+            <option value="$PROJECT_DIR$/kemis-cloud-infra/proxy-server" />
+            <option value="$PROJECT_DIR$/kemis-services" />
+            <option value="$PROJECT_DIR$/kemis-services/account-service" />
+            <option value="$PROJECT_DIR$/kemis-services/catalog-service" />
+            <option value="$PROJECT_DIR$/kemis-services/order-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

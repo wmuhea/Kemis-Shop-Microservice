@@ -1,0 +1,159 @@
+[
+	{
+		"fullName":"Administrator",
+		"email": "testAdmin@gmail.com",
+		"password":"testAdmin",
+		"userRole":"Admin"
+	},
+	{
+       "fullName":"Wonde",
+	   "email": "test1@gmail.com",
+	   "password":"test1",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Luami",
+	   "email": "test2@gmail.com",
+	   "password":"test2",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Selam",
+	   "email": "test3@gmail.com",
+	   "password":"test3",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Fre",
+	   "email": "test4@gmail.com",
+	   "password":"test4",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Solomon",
+	   "email": "test5@gmail.com",
+	   "password":"test5",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Natnael",
+	   "email": "test6@gmail.com",
+	   "password":"test6",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"malawi",
+	   "email": "test7@gmail.com",
+	   "password":"test7",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Moayid",
+	   "email": "test8@gmail.com",
+	   "password":"test8",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Negede",
+	   "email": "test9@gmail.com",
+	   "password":"test9",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Barni",
+	   "email": "test10@gmail.com",
+	   "password":"test10",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Melak",
+	   "email": "test11@gmail.com",
+	   "password":"test11",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Bishiwas",
+	   "email": "test12@gmail.com",
+	   "password":"test12",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Tiringo",
+	   "email": "test13@gmail.com",
+	   "password":"test13",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Burtukan",
+	   "email": "test14@gmail.com",
+	   "password":"test14",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Zelelew",
+	   "email": "test15@gmail.com",
+	   "password":"test15",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Zeberga",
+	   "email": "test16@gmail.com",
+	   "password":"test16",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Zebule",
+	   "email": "test17@gmail.com",
+	   "password":"test17",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Zermechit",
+	   "email": "test18@gmail.com",
+	   "password":"test18",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Zekios",
+	   "email": "test19@gmail.com",
+	   "password":"test19",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Neyney",
+	   "email": "test20@gmail.com",
+	   "password":"test20",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Hedech",
+	   "email": "test21@gmail.com",
+	   "password":"test21",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Meselu",
+	   "email": "test22@gmail.com",
+	   "password":"test22",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Melese",
+	   "email": "test23@gmail.com",
+	   "password":"test23",
+	   "userRole":"Seller"
+	},
+	{
+       "fullName":"Mulatu",
+	   "email": "test24@gmail.com",
+	   "password":"test24",
+	   "userRole":"Buyer"
+	},
+	{
+       "fullName":"Nalign Lene",
+	   "email": "test25@gmail.com",
+	   "password":"test25",
+	   "userRole":"Buyer"
+	}
+
+]

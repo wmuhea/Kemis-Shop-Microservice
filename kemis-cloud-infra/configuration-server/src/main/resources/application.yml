@@ -1,0 +1,15 @@
+
+server:
+  port: 8084
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        git:
+          uri:
+
+
+ #       native:
+ #         search-locations: file:///Users/wontgn/Documents/Study/StudyCodes/MyProjects/Shopping-Cart-Micro/ProjectFolders/configurationserver/src/main/resources/config/authorizationservice
