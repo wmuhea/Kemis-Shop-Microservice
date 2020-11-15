@@ -1,4 +1,3 @@
-
 server:
   port: 8084
 spring:
@@ -8,8 +7,11 @@ spring:
     config:
       server:
         git:
-          uri:
+          uri: https://github.com/wmuhea/Kemis-Shop-Microservice.git
+          search-paths: configuration-files,accountservice,catalogservice,orderservice
 
 
- #       native:
- #         search-locations: file:///Users/wontgn/Documents/Study/StudyCodes/MyProjects/Shopping-Cart-Micro/ProjectFolders/configurationserver/src/main/resources/config/authorizationservice
+  # The following two are used after config: server -> to indicate usage of the resources folder of the config server
+  # native indicates -> that we do not use any repository for storing the configuration files
+  #       native:
+  #         search-locations: file:///Users/wontgn/Documents/Study/StudyCodes/MyProjects/Shopping-Cart-Micro/ProjectFolders/configurationserver/src/main/resources/config/authorizationservice

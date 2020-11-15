@@ -3,7 +3,7 @@ server:
     8181
 spring:
   application:
-    name: authorizationservice
+    name: accountservice
   profiles:
     active:
       default

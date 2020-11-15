@@ -25,6 +25,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class CatalogServiceImpl implements CatalogService {
 
-    private static final String  UPLOAD_DIR = "product_images";
+    private static final String  UPLOAD_DIR = "kemis-services/product-images";
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -64,7 +65,7 @@ public class CatalogServiceImpl implements CatalogService {
                 .orElseThrow(NoSuchElementException::new);
 
         product.setPublicProductId(UUID.randomUUID());
-        product.setImageName(this.storeProductImage(file));
+        product.setImageName(this.storeProductImage(file, product));
         productCategory.addProduct(product);
         categoryRepository.save(productCategory); // saves the product as well
         return mapper.toDtoWithLink(productRepository.save(product));
@@ -191,18 +192,15 @@ public class CatalogServiceImpl implements CatalogService {
         return resourceLoader.getResource("file:"+ UPLOAD_DIR + "/" + fileName);
     }
 
-    private String storeProductImage(MultipartFile file) {
-        // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    private String storeProductImage(MultipartFile file, Product product) {
+        // The image file name will be unique as it is set to product name + public Seller Id
+        String fileName = product.getName() +"_" + product.getPublicSellerId().toString()+  ".jpg";
 
         if(!file.isEmpty()) {
 
-            try {
+            try(InputStream inputStream = file.getInputStream()) {
                 // Check file name
-                if(fileName.contains("..")) {
-                    throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
-                }
-                Files.copy(file.getInputStream(), Paths.get(UPLOAD_DIR, fileName), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(inputStream, Paths.get(UPLOAD_DIR, fileName), StandardCopyOption.REPLACE_EXISTING);
 
             } catch (IOException e) {
                 throw new FileStorageException("Could not store file " + fileName + ". Please try again!", e);
