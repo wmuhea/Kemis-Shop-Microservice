@@ -2,8 +2,6 @@ package com.kemisshop.accountservice.service;
 
 import com.kemisshop.accountservice.dto.AccountResponseDto;
 import com.kemisshop.accountservice.mapper.AccountMapper;
-import com.famshop.authorizationservice.model.*;
-import com.famshop.authorizationservice.repository.*;
 import com.kemisshop.accountservice.model.*;
 import com.kemisshop.accountservice.repository.AccountRepository;
 import com.kemisshop.accountservice.repository.AccountTypeRepository;

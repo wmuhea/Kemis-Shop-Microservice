@@ -4,7 +4,6 @@ import com.kemisshop.accountservice.dto.AccountRequestDto;
 import com.kemisshop.accountservice.dto.AccountResponseDto;
 import com.kemisshop.accountservice.dto.ResponseBean;
 import com.kemisshop.accountservice.dto.UserProfileDto;
-import com.famshop.authorizationservice.model.*;
 import com.kemisshop.accountservice.mapper.AccountMapper;
 import com.kemisshop.accountservice.mapper.UserProfileMapper;
 import com.kemisshop.accountservice.model.Account;
@@ -47,9 +46,9 @@ public class UserApiController {
         return accountMapper.toResponseBean( HttpStatus.CREATED,"Your account is created successfully");
     }
 
-    @PutMapping("/userprofile/{acct-id}")
+    @PutMapping("/userprofile/{publicAcctId}")
     public ResponseBean createUserProfile(@Validated @RequestBody UserProfileDto userProfileDto,
-                                                    @PathVariable(name = "acct-id") UUID publicAccountId) {
+                                                    @PathVariable(name = "publicAcctId") UUID publicAccountId) {
 
         // changed it via mapstruct update later
         UserProfile userProfile = userProfileMapper.toProfile(userProfileDto);

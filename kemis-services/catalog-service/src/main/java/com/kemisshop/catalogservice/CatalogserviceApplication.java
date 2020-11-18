@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -22,6 +23,7 @@ import java.util.stream.Stream;
 
 @SpringBootApplication
 @EnableEurekaClient
+@RefreshScope
 public class CatalogserviceApplication {
 
 	@Profile("!test")
@@ -30,7 +32,7 @@ public class CatalogserviceApplication {
 		String UPLOAD_DIR = "product_images";
 
 		return (strings) -> {
-			Stream.of("Kuta", "mekenet")
+			Stream.of("kemis", "mekenet")
 					.forEach(string ->catalogService
 							.createOne(new ProductCategory(Category.findByLabel(string))));
 			FileSystemUtils.deleteRecursively(new File(UPLOAD_DIR));

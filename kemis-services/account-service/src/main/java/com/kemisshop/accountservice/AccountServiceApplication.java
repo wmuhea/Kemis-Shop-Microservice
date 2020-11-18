@@ -12,6 +12,7 @@ import com.kemisshop.accountservice.mapper.AccountMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 
@@ -24,6 +25,7 @@ import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 
 @SpringBootApplication
 @EnableEurekaClient
+@RefreshScope
 public class AccountServiceApplication implements CommandLineRunner {
 
 	private final AccountService<Account> accountService;

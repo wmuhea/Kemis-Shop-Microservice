@@ -1,12 +1,10 @@
 server:
-  port:
-    8181
+  port: 8083
 spring:
   application:
     name: accountservice
   profiles:
-    active:
-      default
+    active: default
   management:
     endpoints:
       web:

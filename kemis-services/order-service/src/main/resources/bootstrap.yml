@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: orderservice
+  profiles:
+    active: default
+  management:
+    endpoints:
+      web:
+        exposure:
+          include:*
+  cloud:
+    config:
+      uri: http://localhost:8084
+  data:
+    mongodb:
+      port: 27017
