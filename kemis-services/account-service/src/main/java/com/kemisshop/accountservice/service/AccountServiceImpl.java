@@ -57,10 +57,9 @@ public class AccountServiceImpl<T extends Account> implements AccountService<T> 
     @Override
     public Page<AccountResponseDto> getAccounts(Integer pageNumber, Integer size, Type accountType) {
         Page<T> accounts = accountRepository.findByAccountTypeType(PageRequest.of(pageNumber, size), accountType);
-        Page<AccountResponseDto> responseDtos = accounts
+        return accounts
                 .map(account -> accountMapper.toDto(account));
 
-        return responseDtos;
     }
 
     @Override
@@ -81,7 +80,6 @@ public class AccountServiceImpl<T extends Account> implements AccountService<T> 
         SellerAccount seller = accountRepository.findByPublicAccountId(sellerPublicId);
         seller.setApproved();
         accountRepository.save(seller);
-        return;
     }
 
 

@@ -21,7 +21,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/account-service")
+@RequestMapping("/account")
 public class UserApiController {
 
     private final AccountService<Account> accountService;
@@ -29,40 +29,54 @@ public class UserApiController {
     private final UserProfileMapper userProfileMapper;
 
     @Autowired
-    public UserApiController(AccountService<Account> accountService, AccountMapper accountMapper, UserProfileMapper userProfileMapper) {
+    public UserApiController(AccountService<Account> accountService,
+                             AccountMapper accountMapper,
+                             UserProfileMapper userProfileMapper) {
+
         this.accountService = accountService;
         this.accountMapper = accountMapper;
         this.userProfileMapper = userProfileMapper;
     }
 
     @PostMapping("/account")
-    public ResponseBean createAccount(@Validated @RequestBody AccountRequestDto accountRequestDto) {
+    public ResponseBean createAccount(
+            @Validated @RequestBody AccountRequestDto accountRequestDto) {
 
         Account account = accountMapper.toAccount(accountRequestDto);
         Type accountTypeEnum = Type.findByLabel(accountRequestDto.getType());
         AccountType accountTypeSavedInDb = accountService.getAccountType(accountTypeEnum);
         account.setAccountType(accountTypeSavedInDb);
         accountService.save(account);
-        return accountMapper.toResponseBean( HttpStatus.CREATED,"Your account is created successfully");
+
+        return accountMapper.toResponseBean(
+                HttpStatus.CREATED,
+                "Your account is created successfully"
+        );
     }
 
     @PutMapping("/userprofile/{publicAcctId}")
-    public ResponseBean createUserProfile(@Validated @RequestBody UserProfileDto userProfileDto,
-                                                    @PathVariable(name = "publicAcctId") UUID publicAccountId) {
+    public ResponseBean createUserProfile(
+            @Validated @RequestBody UserProfileDto userProfileDto,
+            @PathVariable(name = "publicAcctId") UUID publicAccountId) {
 
         // changed it via mapstruct update later
         UserProfile userProfile = userProfileMapper.toProfile(userProfileDto);
-        AccountResponseDto responseDto = accountService.updateProfileInformation(publicAccountId, userProfile );
+        AccountResponseDto responseDto =
+                accountService.updateProfileInformation(publicAccountId, userProfile );
         return accountMapper.toResponseBean( HttpStatus.CREATED, responseDto);
     }
 
     @GetMapping("/accounts/{accountType}")
-    public ResponseBean getAccounts(@RequestParam("p") Integer page,
-                                                @RequestParam("s") Integer size,
-                                                @PathVariable("accountType") String acctType) {
+    public ResponseBean getAccounts(
+            @RequestParam("p") Integer page,
+            @RequestParam("s") Integer size,
+            @PathVariable("accountType") String acctType) {
 
-        Page<AccountResponseDto> accountResponseDtos = accountService.getAccounts(page, size, Type.findByLabel(acctType));
-        return accountMapper.toResponseBean(HttpStatus.OK, accountResponseDtos);
+        Page<AccountResponseDto> accountResponseDtos =
+                accountService.getAccounts(page, size, Type.findByLabel(acctType));
+
+        return
+                accountMapper.toResponseBean(HttpStatus.OK, accountResponseDtos);
     }
 
     @GetMapping("/account/{id}")
@@ -76,13 +90,20 @@ public class UserApiController {
     public ResponseBean activateAccount( @PathVariable("id") UUID publicId) {
 
        accountService.activateAccount(publicId);
-       return accountMapper.toResponseBean(HttpStatus.OK, "Your account is activated successfully");
+
+       return accountMapper.toResponseBean(
+               HttpStatus.OK,
+               "Your account is activated successfully"
+       );
     }
 
     @DeleteMapping("/account/deactivate/{id}")
     public ResponseBean deleteAccount( @PathVariable("id") UUID publicId) {
         accountService.deleteById(publicId);
-        return accountMapper.toResponseBean( HttpStatus.ACCEPTED,"Your account deletion request is accepted successfully");
+        return accountMapper.toResponseBean(
+                        HttpStatus.ACCEPTED,
+                        "Your account deletion request is accepted successfully"
+                );
     }
 
     @PatchMapping("/buyer/{uuid}")
@@ -91,10 +112,14 @@ public class UserApiController {
     }
 
     @PatchMapping("/accounts/follow/{buyerId}/{sellerId}")
-    public ResponseBean addFavoriteSeller(@PathVariable UUID buyerId, @PathVariable UUID sellerId) {
+    public ResponseBean addFavoriteSeller(@PathVariable UUID buyerId,
+                                          @PathVariable UUID sellerId) {
 
         accountService.followSeller(buyerId, sellerId);
-        return accountMapper.toResponseBean(HttpStatus.OK, "Favorite Seller is added successfully");
+        return accountMapper.toResponseBean(
+                HttpStatus.OK,
+                "Favorite Seller is added successfully"
+        );
 
     }
 

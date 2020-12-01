@@ -10,8 +10,11 @@ import com.kemisshop.orderservice.mapper.DtoEntityMapper;
 import com.kemisshop.orderservice.repository.CartRepository;
 import com.kemisshop.orderservice.repository.OrderRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 import static java.util.stream.Collectors.*;
@@ -22,14 +25,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final DtoEntityMapper mapper;
+    private final DecimalFormat twoDigitFormatterOfPrice;
 
     public OrderServiceImpl(OrderRepository orderRepository,
                             CartRepository cartRepository,
-                            DtoEntityMapper mapper) {
+                            DtoEntityMapper mapper
+    ) {
 
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.mapper = mapper;
+        this.twoDigitFormatterOfPrice = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.US));
     }
 
     @Override
@@ -93,6 +99,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public String checkOutOrder(Cart cart) {
         // first collect each cart Item to a map based on a seller Id
        groupCartBySellerID(cart).forEach(orderRepository::save);
@@ -128,7 +135,9 @@ public class OrderServiceImpl implements OrderService {
         for(CartItem item : items) {
             totalOrderPrice += item.getItemPrice().doubleValue();
         }
-        return BigDecimal.valueOf(totalOrderPrice);
+
+        String formattedTotalPrice = twoDigitFormatterOfPrice.format(totalOrderPrice);
+        return BigDecimal.valueOf(Double.parseDouble(formattedTotalPrice));
 
     }
 }

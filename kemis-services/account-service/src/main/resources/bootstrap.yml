@@ -5,11 +5,6 @@ spring:
     name: accountservice
   profiles:
     active: default
-  management:
-    endpoints:
-      web:
-        exposure:
-          include:*
   cloud:
     config:
       uri: http://localhost:8084

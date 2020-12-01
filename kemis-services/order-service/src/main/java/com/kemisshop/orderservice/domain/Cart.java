@@ -7,10 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Document
 @Setter
@@ -54,6 +51,25 @@ public class Cart {
         this.grandTotal = grandTotal;
         this.createdAt = createdAt;
         UpdatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return Objects.equals(id, cart.id) &&
+                Objects.equals(buyerPublicId, cart.buyerPublicId) &&
+                Objects.equals(publicCartId, cart.publicCartId) &&
+                Objects.equals(cartItemSet, cart.cartItemSet) &&
+                Objects.equals(grandTotal, cart.grandTotal) &&
+                Objects.equals(createdAt, cart.createdAt) &&
+                Objects.equals(UpdatedAt, cart.UpdatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
 

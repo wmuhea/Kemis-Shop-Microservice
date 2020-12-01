@@ -13,6 +13,8 @@ import com.kemisshop.catalogservice.exceptions.FileStorageException;
 import com.kemisshop.catalogservice.repository.ProductRepository;
 import com.kemisshop.catalogservice.repository.CategoryRepository;
 import com.kemisshop.catalogservice.repository.RatingRepository;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -21,7 +23,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -58,6 +59,7 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
+    @Transactional
     public ProductDto createOne(Product product, Category category, MultipartFile file)  throws NoSuchElementException{
 
         ProductCategory productCategory =
@@ -88,9 +90,18 @@ public class CatalogServiceImpl implements CatalogService {
 
 
     @Override
-    public String deleteOne(UUID publicId, String imageName) {
-        Optional<Product> product = productRepository.deleteByPublicProductId(publicId);
-        deleteProductImage(imageName);
+    // Example code of using circuit breaker for database calls
+    @Transactional
+    @HystrixCommand(
+            commandProperties =
+                    {@HystrixProperty(
+                            name = "execution.isolation.thread.timeOutInMilliSeconds",
+                            value = "12000"
+                    )})
+    public String deleteOne(UUID publicId) {
+        Product product = productRepository.deleteByPublicProductId(publicId)
+                .orElseThrow(NoSuchElementException::new);
+        deleteProductImage(product.getImageName());
         return "Your product is deleted";
     }
 
@@ -117,6 +128,13 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
+    // Example code of using circuit breaker for database calls
+    @HystrixCommand(
+            commandProperties =
+                    {@HystrixProperty(
+                            name = "execution.isolation.thread.timeOutInMilliSeconds",
+                            value = "12000"
+                    )})
     public ProductCategory findProductCategoryByCategory(Category category) {
 
         return categoryRepository.findProductCategoryByCategory(category)

@@ -12,11 +12,13 @@ import com.kemisshop.accountservice.mapper.AccountMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -25,6 +27,7 @@ import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableCircuitBreaker
 @RefreshScope
 public class AccountServiceApplication implements CommandLineRunner {
 
@@ -48,9 +51,8 @@ public class AccountServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		populateRoleTable();
-		populateUserTable();
-
+		/*populateRoleTable();
+		populateUserTable();*/
 
 	}
 
@@ -72,18 +74,19 @@ public class AccountServiceApplication implements CommandLineRunner {
 		// read account data
 		List<AccountRequestDto> accountRequestDtos = new ObjectMapper().setVisibility(FIELD, ANY)
 				.readValue(accountData, new TypeReference<List<AccountRequestDto>>() {});
-
+	System.out.println(accountRequestDtos.size());
 		// read user data
-		List<UserProfileDto> userProfileDtos = new ObjectMapper().setVisibility(FIELD, ANY)
-				.readValue(userProfileData, new TypeReference<List<UserProfileDto>>() {});
+		LinkedList<UserProfileDto> userProfileDtos = new ObjectMapper().setVisibility(FIELD, ANY)
+				.readValue(userProfileData, new TypeReference<LinkedList<UserProfileDto>>() {});
 
-
+	System.out.println(userProfileDtos.size());
 		accountRequestDtos.forEach(accountRequestDto -> {
 			// set user profile dto to account dto first
-			accountRequestDto.setUserProfile(userProfileDtos.get(count++));
+			accountRequestDto.setUserProfile(userProfileDtos.removeFirst());
 			Account account = accountMapper.toAccount(accountRequestDto);
 			AccountType accountType = accountService.getAccountType(Type.findByLabel(accountRequestDto.getType()));
 			account.setAccountType(accountType);
+
 			accountService.save(account);
 		});
 	}

@@ -1,0 +1,10 @@
+server:
+  port: 8761
+eureka:
+  client:
+    register-with-eureka: false # Do not register with Eureka Service. Does not register itself in the discovery registry because it is eureka service
+    fetch-registry: false # Do not cache registry locally. This service does not cache registry information as other services
+  server:
+    wait-time-in-ms-when-sync-empty: 5 # Initial time the server has to wait before it takes requests. The amount of time it waits for registries to wait at startup for all services to register themselves
+
+

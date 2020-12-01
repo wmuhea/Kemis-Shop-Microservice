@@ -19,7 +19,7 @@ public interface CatalogService {
 
     ProductDto createOne(Product product, Category category, MultipartFile file);
     ProductDto updateOne(Product product, UUID publicId);
-    String deleteOne(UUID publicId, String imageName) throws IOException;
+    String deleteOne(UUID publicId) throws IOException;
     Map<String, Object> findOne(UUID publicId);
     ProductCategory findProductCategoryByCategory(Category category);
     ProductCategory createOne(ProductCategory productCategory);
