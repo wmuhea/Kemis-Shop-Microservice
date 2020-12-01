@@ -10,7 +10,7 @@ spring:
       server:
         git:
           uri: https://github.com/wmuhea/Kemis-Shop-Microservice.git
-          search-paths: configuration-files,accountservice,catalogservice,orderservice
+          search-paths: configuration-files,accountservice,catalogservice,orderservice,clientproxy
 
 
   # The following two are used after config: server -> to indicate usage of the resources folder of the config server

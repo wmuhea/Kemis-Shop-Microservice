@@ -38,7 +38,7 @@ public class UserApiController {
         this.userProfileMapper = userProfileMapper;
     }
 
-    @PostMapping("/account")
+    @PostMapping(value = "/account")
     public ResponseBean createAccount(
             @Validated @RequestBody AccountRequestDto accountRequestDto) {
 

@@ -1,0 +1,23 @@
+server:
+  port: 5555
+spring:
+  application:
+    name: clientproxy
+  profiles:
+    active: default
+  cloud:
+    config:
+      uri: http://localhost:8084
+
+
+
+#zuul.routes.catalog-service.path=/catalog-service/**
+#zuul.routes.catalog-service.url=http://localhost:8082/
+#zuul.routes.catalog-service.strip-prefix=false
+
+#COnfirguration not enabled for now
+#spring.cloud.config.enabled=false
+
+
+
+

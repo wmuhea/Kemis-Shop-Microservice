@@ -14,12 +14,14 @@ package com.kemisshop.catalogservice.clients;
 import com.kemisshop.catalogservice.dto.ResponseBean;
 import com.kemisshop.catalogservice.mapper.DtoEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
+@Qualifier("orderservice")
 public class OrderServiceFeignClientFallback implements OrderServiceFeignClient{
     @Autowired
     DtoEntityMapper mapper;

@@ -20,9 +20,10 @@ dependencies {
 /*	implementation 'org.apache.kafka:kafka-streams'*/
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	/*implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'*/
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
-	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+	/*implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'*/
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

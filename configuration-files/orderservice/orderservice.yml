@@ -1,3 +1,7 @@
-tracer.property: "I AM THE DEFAULT"
-spring.data.mongodb.host: "localhost"
-spring.data.mongodb.port: "27017"
+tracer:
+   property: "I AM THE DEFAULT"
+spring:
+   data:
+     mongodb:
+        host: "localhost"
+        port: "27017"

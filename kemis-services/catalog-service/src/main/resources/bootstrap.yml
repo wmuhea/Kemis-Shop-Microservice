@@ -1,16 +1,18 @@
 server:
-  port: 8082
+  port: "8082"
 spring:
   application:
-    name: catalogservice
+    name: "catalogservice"
   profiles:
-    active: default
-  management:
-    endpoints:
-      web:
-        exposure:
-          include:*
+    active: "default"
   cloud:
     config:
-      uri: http://localhost:8084
+      uri: "http://localhost:8084"
+
+# for actuator end points
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
