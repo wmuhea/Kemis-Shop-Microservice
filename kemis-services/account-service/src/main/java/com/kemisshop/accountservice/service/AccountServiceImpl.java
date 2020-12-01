@@ -2,8 +2,6 @@ package com.kemisshop.accountservice.service;
 
 import com.kemisshop.accountservice.dto.AccountResponseDto;
 import com.kemisshop.accountservice.mapper.AccountMapper;
-import com.famshop.authorizationservice.model.*;
-import com.famshop.authorizationservice.repository.*;
 import com.kemisshop.accountservice.model.*;
 import com.kemisshop.accountservice.repository.AccountRepository;
 import com.kemisshop.accountservice.repository.AccountTypeRepository;
@@ -59,10 +57,9 @@ public class AccountServiceImpl<T extends Account> implements AccountService<T> 
     @Override
     public Page<AccountResponseDto> getAccounts(Integer pageNumber, Integer size, Type accountType) {
         Page<T> accounts = accountRepository.findByAccountTypeType(PageRequest.of(pageNumber, size), accountType);
-        Page<AccountResponseDto> responseDtos = accounts
+        return accounts
                 .map(account -> accountMapper.toDto(account));
 
-        return responseDtos;
     }
 
     @Override
@@ -83,7 +80,6 @@ public class AccountServiceImpl<T extends Account> implements AccountService<T> 
         SellerAccount seller = accountRepository.findByPublicAccountId(sellerPublicId);
         seller.setApproved();
         accountRepository.save(seller);
-        return;
     }
 
 

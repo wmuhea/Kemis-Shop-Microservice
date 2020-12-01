@@ -32,26 +32,36 @@ public class OrderApi {
     }
 
     @GetMapping("/cart")
-    public ResponseBean getCartForBuyer(@RequestParam("id") UUID buyerPublicId) {
+    public ResponseBean getCartForBuyer(
+            @RequestParam("id") UUID buyerPublicId
+    ) {
 
         CartDto buyerCart = orderService.getCartForBuyer(buyerPublicId);
         return mapper.toResponseBean(HttpStatus.CREATED, buyerCart);
     }
 
-    @GetMapping("/{sellerId}/product")
-    public ResponseBean isProductRecentlyOrdered(@PathVariable("sellerId") UUID sellerPublicId,
-                                                   @RequestParam(value="id") UUID publicProductId) {
+    @GetMapping("/{sId}/product")
+    public ResponseBean isProductRecentlyOrdered(
+            // The request parameter pId is the publicProductId
+            @PathVariable("sId") UUID publicSellerId,
+            @RequestParam(value="pId") UUID publicProductId
+    ) {
 
-        Boolean response = orderService.isProductOrdered(sellerPublicId, publicProductId);
-        ResponseBean responseBean = response ? mapper.toResponseBean(HttpStatus.FOUND, "Ordered") :
+        Boolean response =
+                orderService.isProductOrdered(publicSellerId, publicProductId);
+        return
+                response ? mapper.toResponseBean(HttpStatus.FOUND, "Ordered") :
                 mapper.toResponseBean(HttpStatus.NOT_FOUND, "Not Ordered");
-        return responseBean;
+
+
     }
 
-    @PutMapping
-    public ResponseBean cancelOrder_by_seller(@RequestParam(value = "id") UUID orderPublicId){
-        String response = orderService.cancelOrderBySeller(orderPublicId);
-        return mapper.toResponseBean(HttpStatus.ACCEPTED, "The order is Cancelled");
+    @PutMapping("")
+    public ResponseBean cancelOrder_by_seller(
+            @RequestParam(value = "oId") UUID orderPublicId
+    ){
+        orderService.cancelOrderBySeller(orderPublicId);
+        return mapper.toResponseBean(HttpStatus.ACCEPTED, "The order is Cancelled by the seller");
         // Here we have to send a message to the buyer that ordered the canceled order
     }
 

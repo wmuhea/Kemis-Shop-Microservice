@@ -1,19 +1,18 @@
 server:
-  port:
-    8181
+  port: 8083
 spring:
   application:
     name: accountservice
   profiles:
-    active:
-      default
-  management:
-    endpoints:
-      web:
-        exposure:
-          include:*
+    active: default
   cloud:
     config:
       uri: http://localhost:8084
 
+# for actuator end points
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 

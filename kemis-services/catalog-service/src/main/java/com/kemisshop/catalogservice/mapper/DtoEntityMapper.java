@@ -37,7 +37,7 @@ public interface DtoEntityMapper {
     @Mapping(target = "id", ignore = true)
     Product toEntity(ProductDto productDto);
 
-    @Mapping(target = "category", ignore = true)
+
     ProductDto toDto(Product product);
 
     default ResponseBean toResponseBean(HttpStatus responseStatus, Object object) {

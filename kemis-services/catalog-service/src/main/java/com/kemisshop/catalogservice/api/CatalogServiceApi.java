@@ -1,11 +1,14 @@
 package com.kemisshop.catalogservice.api;
 
 
+import com.kemisshop.catalogservice.clients.OrderServiceFeignClient;
 import com.kemisshop.catalogservice.dto.*;
 import com.kemisshop.catalogservice.mapper.DtoEntityMapper;
 import com.kemisshop.catalogservice.model.Category;
 import com.kemisshop.catalogservice.model.Product;
 import com.kemisshop.catalogservice.service.CatalogService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
@@ -31,13 +34,19 @@ public class CatalogServiceApi {
     private final CatalogService catalogService;
     private final DtoEntityMapper mapper;
     private final WebClient.Builder webClientBuilder;
+    private final OrderServiceFeignClient client;
 
     @Autowired
-    public CatalogServiceApi(CatalogService catalogService, DtoEntityMapper mapper,
-                             @Qualifier("WebClientLocal") WebClient.Builder builder ) {
+    public CatalogServiceApi(
+            CatalogService catalogService,
+            DtoEntityMapper mapper,
+            @Qualifier("WebClientLocal") WebClient.Builder builder,
+            @Qualifier("orderservice") OrderServiceFeignClient client
+    ) {
         this.catalogService = catalogService;
         this.mapper = mapper;
         this.webClientBuilder = builder;
+        this.client = client;
     }
 
     @PostMapping(value = "/product", consumes = {"multipart/form-data"})
@@ -103,6 +112,7 @@ public class CatalogServiceApi {
     }
 
     @PatchMapping("/product/{publicId}")
+
     public ResponseBean approveProduct(@PathVariable UUID publicId) {
         catalogService.approveProduct(publicId);
         return mapper.toResponseBean(HttpStatus.ACCEPTED,"The product is approved" );
@@ -115,17 +125,48 @@ public class CatalogServiceApi {
         return mapper.toResponseBean(HttpStatus.OK,"The product is approved");
     }
 
-    @DeleteMapping("/product/{productPublicId}")
-    public ResponseBean deleteProduct(@PathVariable UUID productPublicId,
-                                      @RequestParam("img") String imageName) throws IOException{
+    @DeleteMapping("/product/{sPid}")
+    @HystrixCommand(threadPoolKey = "productOrderedCheckingThreadPool",
+            threadPoolProperties = {@HystrixProperty(name = "coreSize", value = "30"),
+                    @HystrixProperty(name = "maximumQueueSize", value = "10")
+            },
+            commandProperties = {@HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "75"),
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "7000"),
+                    @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "15000"),
+                    @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "15")
+            }
+    )
+    // Improvements for url shortening
+    // Still I can send the seller public Id as a UserContext that can
+    // be extracted in the different services
+    public ResponseBean deleteProduct(
+            @PathVariable("sPid") UUID sellerPublicId,
+            @RequestParam("pPid") UUID productPublicId
+    ) throws IOException{
+       /* I will use this when I use a webClinet
        return
         isProductOrdered(productPublicId) ?
                 mapper.toResponseBean(HttpStatus.NOT_ACCEPTABLE, "Please Cancel the Order first") :
                 mapper.toResponseBean(HttpStatus.ACCEPTED, catalogService.deleteOne(productPublicId, imageName));
+       */
 
+        // The following code uses spring-cloud feign client to check if the product is currently
+        // Order or not.
+
+        ResponseBean responseFromOrderService = client.isProductOrdered(sellerPublicId, productPublicId);
+
+        // Based on the response, notify the interviewer with the
+        return responseFromOrderService.getResponsePayLoad().equals("Ordered") ?
+                mapper.toResponseBean(HttpStatus.NOT_ACCEPTABLE, "Please Cancel the Order first") :
+                mapper.toResponseBean(HttpStatus.ACCEPTED, catalogService.deleteOne(productPublicId));
     }
 
-    // This method makes the api call to the order service
+    /** WebClient method -> to call the order service
+     *  But the feign client is used for now
+     * @param productPublicId
+     * @return
+     */
     private Boolean isProductOrdered(UUID productPublicId) {
 
         // BE CAREFUL CHANGE LATTER THE RANDOM UUID WITH THE SELLER ID In the bellew call

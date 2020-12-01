@@ -1,6 +1,5 @@
 package com.kemisshop.accountservice.mapper;
 
-import com.famshop.authorizationservice.dto.*;
 import com.kemisshop.accountservice.model.Account;
 
 import com.kemisshop.accountservice.model.BuyerAccount;
