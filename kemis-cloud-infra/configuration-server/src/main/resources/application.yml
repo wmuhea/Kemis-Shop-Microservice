@@ -3,17 +3,34 @@ server:
 spring:
   application:
     name: configurationserver
-  profiles:
-    active: native
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/wmuhea/Kemis-Shop-Microservice.git
-          search-paths: configuration-files,accountservice,catalogservice,orderservice,clientproxy
+          uri: https://github.com/wmuhea/kemis-shop-microservice-config.git
+          search-paths:
+            - '*service' # searches configuration files in any folders ending with service
+          default-label: main   #Tells the branch name and by default this is master
+    bus:
+      env:
+        enabled: true
+#  profiles:
+#    active: Config-Monitor
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
 
 
   # The following two are used after config: server -> to indicate usage of the resources folder of the config server
   # native indicates -> that we do not use any repository for storing the configuration files
   #       native:
   #         search-locations: file:///Users/wontgn/Documents/Study/StudyCodes/MyProjects/Shopping-Cart-Micro/ProjectFolders/configurationserver/src/main/resources/config/authorizationservice
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

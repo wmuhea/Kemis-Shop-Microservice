@@ -8,10 +8,3 @@ spring:
   cloud:
     config:
       uri: "http://localhost:8084"
-
-# for actuator end points
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
