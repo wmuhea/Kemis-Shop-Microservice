@@ -2,10 +2,10 @@ package com.kemisshop.accountservice.service;
 
 
 import com.kemisshop.accountservice.dto.AccountResponseDto;
-import com.kemisshop.accountservice.model.Account;
-import com.kemisshop.accountservice.model.AccountType;
-import com.kemisshop.accountservice.model.Type;
-import com.kemisshop.accountservice.model.UserProfile;
+import com.kemisshop.accountservice.app.model.Account;
+import com.kemisshop.accountservice.app.model.AccountType;
+import com.kemisshop.accountservice.app.model.Role;
+import com.kemisshop.accountservice.app.model.UserProfile;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
@@ -20,7 +20,7 @@ public interface AccountService<T extends Account> {
 
      void deleteById(UUID acctPublicId);
 
-     Page<AccountResponseDto> getAccounts(Integer pageNumber, Integer size, Type accountType);
+     Page<AccountResponseDto> getAccounts(Integer pageNumber, Integer size, Role accountRole);
 
      void followSeller(UUID acctPublicId1, UUID acctPublicId2);
 
@@ -28,7 +28,7 @@ public interface AccountService<T extends Account> {
 
      void updateDiscountPoints(UUID acctPublicId);
 
-     AccountType getAccountType(Type type);
+     AccountType getAccountType(Role role);
 
      AccountType save(AccountType accountType);
 

@@ -14,6 +14,13 @@ spring:
     bus:
       env:
         enabled: true
+  boot:
+    admin:
+      client:
+        url: http://localhost:9090
+        username: admin
+        password: client
+
 #  profiles:
 #    active: Config-Monitor
   rabbitmq:

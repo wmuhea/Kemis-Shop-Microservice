@@ -10,6 +10,7 @@ spring:
       uri: http://localhost:8084
 
 
+
 # for actuator end points
 management:
   endpoints:
@@ -19,3 +20,5 @@ management:
   info:
     git:
       mode: full
+
+

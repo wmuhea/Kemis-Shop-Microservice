@@ -1,9 +1,9 @@
 package com.kemisshop.accountservice.mapper;
 
-import com.kemisshop.accountservice.model.Account;
-import com.kemisshop.accountservice.model.AdminAccount;
-import com.kemisshop.accountservice.model.BuyerAccount;
-import com.kemisshop.accountservice.model.SellerAccount;
+import com.kemisshop.accountservice.app.model.Account;
+import com.kemisshop.accountservice.app.model.AdminAccount;
+import com.kemisshop.accountservice.app.model.BuyerAccount;
+import com.kemisshop.accountservice.app.model.SellerAccount;
 
 public class AccountFactory {
 

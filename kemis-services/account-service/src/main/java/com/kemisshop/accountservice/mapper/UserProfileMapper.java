@@ -1,7 +1,7 @@
 package com.kemisshop.accountservice.mapper;
 
 import com.kemisshop.accountservice.dto.UserProfileDto;
-import com.kemisshop.accountservice.model.UserProfile;
+import com.kemisshop.accountservice.app.model.UserProfile;
 import org.mapstruct.Mapper;
 
 

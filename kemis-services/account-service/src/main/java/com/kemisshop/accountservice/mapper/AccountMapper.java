@@ -1,9 +1,9 @@
 package com.kemisshop.accountservice.mapper;
 
-import com.kemisshop.accountservice.model.Account;
+import com.kemisshop.accountservice.app.model.Account;
 
-import com.kemisshop.accountservice.model.BuyerAccount;
-import com.kemisshop.accountservice.model.SellerAccount;
+import com.kemisshop.accountservice.app.model.BuyerAccount;
+import com.kemisshop.accountservice.app.model.SellerAccount;
 import com.kemisshop.accountservice.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.ObjectFactory;

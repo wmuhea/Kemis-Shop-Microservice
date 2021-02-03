@@ -1,12 +1,12 @@
 package com.kemisshop.accountservice.repository;
 
-import com.kemisshop.accountservice.model.AccountType;
-import com.kemisshop.accountservice.model.Type;
+import com.kemisshop.accountservice.app.model.AccountType;
+import com.kemisshop.accountservice.app.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface AccountTypeRepository extends JpaRepository<AccountType, Long> {
 
-    AccountType findAccountTypeByType(Type type);
+    AccountType findAccountTypeByRole(Role role);
 
 }

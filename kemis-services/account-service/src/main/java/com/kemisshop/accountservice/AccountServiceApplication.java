@@ -2,16 +2,15 @@ package com.kemisshop.accountservice;
 
 import com.kemisshop.accountservice.dto.AccountRequestDto;
 import com.kemisshop.accountservice.dto.UserProfileDto;
-import com.kemisshop.accountservice.model.Account;
-import com.kemisshop.accountservice.model.AccountType;
-import com.kemisshop.accountservice.model.Type;
+import com.kemisshop.accountservice.app.model.Account;
+import com.kemisshop.accountservice.app.model.AccountType;
+import com.kemisshop.accountservice.app.model.Role;
 import com.kemisshop.accountservice.service.AccountService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kemisshop.accountservice.mapper.AccountMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -58,9 +57,9 @@ public class AccountServiceApplication implements CommandLineRunner {
 	}
 
 	private void populateRoleTable() {
-		accountService.save(new AccountType(Type.findByLabel("Seller")));
-		accountService.save(new AccountType(Type.findByLabel("Buyer")));
-		accountService.save(new AccountType(Type.findByLabel("Admin")));
+		accountService.save(new AccountType(Role.findByLabel("Seller")));
+		accountService.save(new AccountType(Role.findByLabel("Buyer")));
+		accountService.save(new AccountType(Role.findByLabel("Admin")));
 	}
 
 	private void populateUserTable()  throws Exception{
@@ -85,7 +84,7 @@ public class AccountServiceApplication implements CommandLineRunner {
 			// set user profile dto to account dto first
 			accountRequestDto.setUserProfile(userProfileDtos.removeFirst());
 			Account account = accountMapper.toAccount(accountRequestDto);
-			AccountType accountType = accountService.getAccountType(Type.findByLabel(accountRequestDto.getType()));
+			AccountType accountType = accountService.getAccountType(Role.findByLabel(accountRequestDto.getType()));
 			account.setAccountType(accountType);
 
 			accountService.save(account);

@@ -1,14 +1,17 @@
 package com.kemisshop.catalogservice.repository;
 
-import com.kemisshop.catalogservice.model.Category;
-import com.kemisshop.catalogservice.model.Product;
-import com.kemisshop.catalogservice.model.ProductCategory;
+import com.kemisshop.catalogservice.domain.Category;
+import com.kemisshop.catalogservice.domain.Product;
+import com.kemisshop.catalogservice.domain.ProductCategory;
+import com.kemisshop.catalogservice.adapter.persistence.CategoryRepository;
+import com.kemisshop.catalogservice.adapter.persistence.ProductRepository;
 import com.kemisshop.catalogservice.entitiesfactory.TestEntitiesFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,7 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+// @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //use this for testing using real db
+@ImportAutoConfiguration(RefreshAutoConfiguration.class)
 public class ProductRepositoryTest {
 
     @Autowired
@@ -41,7 +45,7 @@ public class ProductRepositoryTest {
 
         // saved to H2 database
         pcList.forEach(testEntityManager::persist);
-        ProductCategory pcKemis = categoryRepository.findProductCategoryByCategory(Category.Kemis)
+        ProductCategory pcKemis = categoryRepository.findProductCategoryByCategory(Category.KEMIS)
                 .orElseThrow(NoSuchElementException::new);
 
         testEntityManager.persist(prTest);

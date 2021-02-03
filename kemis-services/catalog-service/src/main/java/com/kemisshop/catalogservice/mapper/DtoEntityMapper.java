@@ -1,14 +1,16 @@
 package com.kemisshop.catalogservice.mapper;
 
-import com.kemisshop.catalogservice.api.CatalogServiceApi;
-import com.kemisshop.catalogservice.dto.*;
-import com.kemisshop.catalogservice.model.Product;
-import com.kemisshop.catalogservice.model.ProductCategory;
-import com.kemisshop.catalogservice.model.Rating;
+import com.kemisshop.catalogservice.adapter.api.CatalogApi;
+import com.kemisshop.catalogservice.dto.ProductDto;
+import com.kemisshop.catalogservice.dto.RatingDto;
+import com.kemisshop.catalogservice.domain.Product;
+import com.kemisshop.catalogservice.domain.ProductCategory;
+import com.kemisshop.catalogservice.domain.Rating;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
@@ -60,8 +62,8 @@ public interface DtoEntityMapper {
         String imageName = product.getImageName();
         ProductDto productDto = this.toDto(product);
         UUID publicId = productDto.getPublicProductId();
-        Link selfLink = linkTo(methodOn(CatalogServiceApi.class).getProductImage(imageName)).withRel("image");
-        Link imageLink = linkTo(methodOn(CatalogServiceApi.class).getProduct(publicId)).withSelfRel();
+        Link selfLink = WebMvcLinkBuilder.linkTo(methodOn(CatalogApi.class).getProductImage(imageName)).withRel("image");
+        Link imageLink = linkTo(methodOn(CatalogApi.class).getProduct(publicId)).withSelfRel();
         productDto.add(imageLink);
         productDto.add(selfLink);
         return productDto;

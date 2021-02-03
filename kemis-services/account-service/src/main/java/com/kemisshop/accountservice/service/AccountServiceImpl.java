@@ -2,12 +2,13 @@ package com.kemisshop.accountservice.service;
 
 import com.kemisshop.accountservice.dto.AccountResponseDto;
 import com.kemisshop.accountservice.mapper.AccountMapper;
-import com.kemisshop.accountservice.model.*;
+import com.kemisshop.accountservice.app.model.*;
 import com.kemisshop.accountservice.repository.AccountRepository;
 import com.kemisshop.accountservice.repository.AccountTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +27,14 @@ public class AccountServiceImpl<T extends Account> implements AccountService<T> 
     @Autowired
     private AccountTypeRepository accountTypeRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Override
     public AccountResponseDto save(T account) {
         account.setPublicAccountId(UUID.randomUUID());
+        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
         return  accountMapper.toDto(account);
     }
@@ -55,8 +60,8 @@ public class AccountServiceImpl<T extends Account> implements AccountService<T> 
     }
 
     @Override
-    public Page<AccountResponseDto> getAccounts(Integer pageNumber, Integer size, Type accountType) {
-        Page<T> accounts = accountRepository.findByAccountTypeType(PageRequest.of(pageNumber, size), accountType);
+    public Page<AccountResponseDto> getAccounts(Integer pageNumber, Integer size, Role accountRole) {
+        Page<T> accounts = accountRepository.findByAccountTypeRole(PageRequest.of(pageNumber, size), accountRole);
         return accounts
                 .map(account -> accountMapper.toDto(account));
 
@@ -91,8 +96,8 @@ public class AccountServiceImpl<T extends Account> implements AccountService<T> 
     }
 
     @Override
-    public AccountType getAccountType(Type type) {
-        return accountTypeRepository.findAccountTypeByType(type);
+    public AccountType getAccountType(Role role) {
+        return accountTypeRepository.findAccountTypeByRole(role);
     }
 
     @Override
