@@ -4,6 +4,13 @@ package com.kemisshop.accountservice.app.model;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * @author wontgn
+ * @created 2/16/21
+ * @package com.kemisshop.accountservice.app.model
+ */
+
 public enum Role {
 
     ROLE_ADMIN("Admin"), ROLE_SELLER("Seller"), ROLE_BUYER("Buyer");

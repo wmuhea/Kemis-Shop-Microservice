@@ -1,7 +1,7 @@
 package com.kemisshop.accountservice.config;
 
 /*
-    wontgn created on 12/14/20 inside the package - com.kemisshop.accountservice.config
+    wontgn created on 12/14/20 inside the package - com.kemisshop.accountservice.common.config
 */
 
 

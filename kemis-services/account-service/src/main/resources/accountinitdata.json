@@ -1,0 +1,101 @@
+[
+	{
+		"name":"Wondwosen Eshetu",
+		"email": "testAdmin@gmail.com",
+		"password":"testAdmin",
+		"phone": "+251912145941",
+		"account_type":"Admin"
+	},
+	{
+		"name":"BirrZegen Nigussie",
+	   "email": "test1@gmail.com",
+	   "password":"test1",
+		"phone": "+251912145244",
+	   "account_type":"Buyer"
+	},
+	{
+		"name": "Yeshisew Negede",
+	   "email": "test2@gmail.com",
+	   "password":"test2",
+		"phone": "+251912145942",
+	   "account_type":"Buyer"
+	},
+	{
+		"name": "Luam Gebremedhin",
+	   "email": "test3@gmail.com",
+	   "password":"test3",
+		"phone": "+251912145944",
+	   "account_type":"Buyer"
+	},
+	{
+		"name": "Yabsera Kebede",
+	   "email": "test4@gmail.com",
+	   "password":"test4",
+		"phone": "+251912145945",
+	   "account_type":"Seller"
+	},
+	{
+		"name": "Kirubel Kefyalew",
+	   "email": "test5@gmail.com",
+	   "password":"test5",
+		"phone": "+251912164598",
+	   "account_type":"Seller"
+	},
+	{
+		"name": "Sofanit Shibiru",
+	   "email": "test6@gmail.com",
+	   "password":"test6",
+		"phone": "+251912164589",
+	   "account_type":"Seller"
+	},
+	{
+		"name": "Kefyalew Tassew",
+	   "email": "test7@gmail.com",
+	   "password":"test7",
+		"phone": "+251912164518",
+	   "account_type":"Seller"
+	},
+	{
+		"name": "Tebeje Melkamu",
+	   "email": "test8@gmail.com",
+	   "password":"test8",
+		"phone": "+251912164508",
+	   "account_type":"Seller"
+	},
+	{
+		"name": "Wodale Kebede",
+	   "email": "test9@gmail.com",
+	   "password":"test9",
+		"phone": "+251912160598",
+	   "account_type":"Buyer"
+	},
+	{
+       "name": "Enane Ayate",
+	   "email": "test10@gmail.com",
+	   "password":"test10",
+		"phone": "+251912161598",
+	   "account_type":"Seller"
+	},
+	{
+		"name": "Kebede Manyazewal",
+	   "email": "test11@gmail.com",
+	   "password":"test11",
+		"phone": "+251912064598",
+	   "type":"Seller"
+	},
+	{
+		"name": "Saba Gebremeskel",
+	   "email": "test12@gmail.com",
+	   "password":"test12",
+		"phone": "+251912964598",
+	   "account_type":"Seller"
+	},
+	{
+       "name": "Hibist Tiruneh",
+	   "email": "test13@gmail.com",
+	   "password":"test13",
+		"phone": "+251912164598",
+	   "account_type":"Seller"
+	}
+
+]

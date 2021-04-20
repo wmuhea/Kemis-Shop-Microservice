@@ -1,44 +1,57 @@
 package com.kemisshop.accountservice.app.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+
+/**
+ * @author wontgn
+ * @created 2/16/21
+ * @package com.kemisshop.accountservice.app.model
+ */
 
 @Entity
-@NoArgsConstructor
+@Table(name = "SellerAccount")
 public class SellerAccount extends Account implements Serializable {
     private static final long serialVersionUID = 551664287612013332L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long Id;
+    private Boolean approved;
 
-    private Boolean approved = false;
-
-    @ManyToMany
-    @JoinTable(name = "FAV_SELLERS", joinColumns = @JoinColumn(name = "SELLER_ID"),
-               inverseJoinColumns = @JoinColumn(name = "BUYER_ID"))
-    @JsonBackReference
-    private Set<BuyerAccount> followers = new HashSet<>();
-
-
-    public void addFollowers(BuyerAccount buyerAccount) {
-        followers.add(buyerAccount);
-    }
+    private Long numberOfFollowers;
 
     public Boolean isApproved() {
         return approved;
     }
 
-    public void setApproved() {
+    public void approve() {
         this.approved = true;
     }
 
-    public Set<BuyerAccount> getFollowers() {
-        return followers;
+    public Long getNumberOfFollowers() {
+        return numberOfFollowers;
     }
 
+    public void incrementFollowerNumber() {
+        this.numberOfFollowers++;
+    }
+
+    public SellerAccount () {
+
+    }
+    private SellerAccount(String fullName, String email,
+                         String password, String phoneNumber,
+                         AccountType accountType) {
+
+        super(fullName, email, password, phoneNumber, accountType);
+        this.approved = false;
+        this.numberOfFollowers = 0l;
+    }
+
+    public static SellerAccount of(String fullName, String email,
+                                   String password, String phoneNumber,
+                                   AccountType accountType) {
+
+        return new SellerAccount(fullName, email, password, phoneNumber, accountType);
+    }
 }

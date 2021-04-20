@@ -10,6 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+
+/**
+ * @author wontgn
+ * @created 2/16/21
+ * @package com.kemisshop.accountservice.app.model
+ */
+
 @Entity
 @Getter
 @Setter
@@ -23,7 +30,11 @@ public class AdminAccount extends Account implements Serializable {
     private Long Id;
 
 
-    public AdminAccount(String email, String password, AccountType accountType) {
-        super(email, password, accountType);
+    private AdminAccount(String fullName, String email,
+                          String password, String phoneNumber,
+                          AccountType accountType) {
+
+        super(fullName, email, password, phoneNumber, accountType);
+
     }
 }
