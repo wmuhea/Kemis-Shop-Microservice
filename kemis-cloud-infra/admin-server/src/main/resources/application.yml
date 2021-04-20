@@ -1,0 +1,12 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: adminserver
+  security:
+    user:
+      name: admin
+      password: client
+  boot:
+    routes:
+      endpoints: env, metrics, trace, jolokia, info, configprops

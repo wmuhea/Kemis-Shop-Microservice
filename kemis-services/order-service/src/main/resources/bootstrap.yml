@@ -1,17 +1,10 @@
 server:
-  port: "8081"
+  port: 8081
 spring:
   application:
-    name: "orderservice"
+    name: orderservice
   profiles:
-    active: "default"
+    active: default
   cloud:
     config:
-      uri: "http://localhost:8084"
-
-# for actuator end points
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+      uri: http://localhost:8084

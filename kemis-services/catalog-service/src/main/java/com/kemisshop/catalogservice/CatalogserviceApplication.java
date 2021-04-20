@@ -1,8 +1,9 @@
 package com.kemisshop.catalogservice;
 
-import com.kemisshop.catalogservice.model.Category;
-import com.kemisshop.catalogservice.model.ProductCategory;
-import com.kemisshop.catalogservice.service.CatalogService;
+import com.kemisshop.catalogservice.app.port.in.ModifyCategoryInPort;
+import com.kemisshop.catalogservice.domain.Category;
+import com.kemisshop.catalogservice.domain.ProductCategory;
+import com.kemisshop.catalogservice.app.port.in.ModifyProductInPort;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,8 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -32,13 +31,14 @@ public class CatalogserviceApplication {
 
 	@Profile("!test")
 	@Bean
-	CommandLineRunner commandLineRunner (CatalogService catalogService) {
-		String UPLOAD_DIR = "product_images";
+	CommandLineRunner commandLineRunner (ModifyProductInPort modifyProductInPort,
+										 ModifyCategoryInPort modifyCategoryInPort) {
+		String UPLOAD_DIR = "kemis-services/product-images";
 
 		return (strings) -> {
 			Stream.of("kemis", "mekenet")
-					.forEach(string ->catalogService
-							.createOne(new ProductCategory(Category.findByLabel(string))));
+					.forEach(string -> modifyCategoryInPort
+							.save(new ProductCategory(Category.findByLabel(string))));
 			FileSystemUtils.deleteRecursively(new File(UPLOAD_DIR));
 			Files.createDirectory(Paths.get(UPLOAD_DIR));
 

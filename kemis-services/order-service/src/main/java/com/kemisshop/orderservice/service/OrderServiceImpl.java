@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findBySellerId(publicSellerId)
                 .stream().map(mapper::toDto)
                 .collect(toList());
+
     }
 
     @Override

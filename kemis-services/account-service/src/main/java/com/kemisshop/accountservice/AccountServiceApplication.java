@@ -1,14 +1,11 @@
 package com.kemisshop.accountservice;
 
-import com.kemisshop.accountservice.dto.AccountRequestDto;
-import com.kemisshop.accountservice.dto.UserProfileDto;
-import com.kemisshop.accountservice.model.Account;
-import com.kemisshop.accountservice.model.AccountType;
-import com.kemisshop.accountservice.model.Type;
-import com.kemisshop.accountservice.service.AccountService;
+import com.kemisshop.accountservice.app.dto.request.AccountForm;
+import com.kemisshop.accountservice.app.dto.request.AccountTypeForm;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kemisshop.accountservice.mapper.AccountMapper;
+import com.kemisshop.accountservice.app.port.in.AccountRegistrationOrUpdateServiceAccessPort;
+import com.kemisshop.accountservice.app.port.in.AccountsManagementServiceAccessPort;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,8 +15,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
+
 
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
@@ -31,17 +28,19 @@ import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 @RefreshScope
 public class AccountServiceApplication implements CommandLineRunner {
 
-	private final AccountService<Account> accountService;
-
-	private final AccountMapper accountMapper;
-
+	private final AccountsManagementServiceAccessPort managementServiceAccessPort;
+	private final AccountRegistrationOrUpdateServiceAccessPort registerOrUpdateService;
 	private int count;
 
-	public AccountServiceApplication(AccountService<Account> accountService, AccountMapper accountMapper) {
-		this.accountService = accountService;
-		this.accountMapper = accountMapper;
+	public AccountServiceApplication(
+			AccountsManagementServiceAccessPort managementServiceAccessPort,
+			AccountRegistrationOrUpdateServiceAccessPort registerOrUpdateService) {
+
+		this.managementServiceAccessPort = managementServiceAccessPort;
+		this.registerOrUpdateService = registerOrUpdateService;
 		this.count = 0;
 	}
+
 
 
 
@@ -51,43 +50,34 @@ public class AccountServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*populateRoleTable();
-		populateUserTable();*/
+		populateAccountTypeTable();
+		populateUserTable();
 
 	}
 
-	private void populateRoleTable() {
-		accountService.save(new AccountType(Type.findByLabel("Seller")));
-		accountService.save(new AccountType(Type.findByLabel("Buyer")));
-		accountService.save(new AccountType(Type.findByLabel("Admin")));
+	private void populateAccountTypeTable() {
+		AccountTypeForm buyerForm = new AccountTypeForm("Buyer");
+		AccountTypeForm sellerForm = new AccountTypeForm("Seller");
+		AccountTypeForm adminForm = new AccountTypeForm("Admin");
+
+		managementServiceAccessPort.createAccountType(buyerForm);
+		managementServiceAccessPort.createAccountType(sellerForm);
+		managementServiceAccessPort.createAccountType(adminForm);
 	}
 
 	private void populateUserTable()  throws Exception{
 		/*createUsers(importedFile);*/
-		String accountFileName = "InitialData0.json";
-		String userFileName = "userprofiledata.json";
+		String accountFileName = "accountinitdata.json";
 		ClassLoader classLoader = getClass().getClassLoader();
-
 		File accountData = new File(classLoader.getResource(accountFileName).getFile());
-		File userProfileData = new File(classLoader.getResource(userFileName).getFile());
 
 		// read account data
-		List<AccountRequestDto> accountRequestDtos = new ObjectMapper().setVisibility(FIELD, ANY)
-				.readValue(accountData, new TypeReference<List<AccountRequestDto>>() {});
-	System.out.println(accountRequestDtos.size());
-		// read user data
-		LinkedList<UserProfileDto> userProfileDtos = new ObjectMapper().setVisibility(FIELD, ANY)
-				.readValue(userProfileData, new TypeReference<LinkedList<UserProfileDto>>() {});
+		List<AccountForm> accountForms = new ObjectMapper().setVisibility(FIELD, ANY)
+				.readValue(accountData, new TypeReference<List<AccountForm>>() {});
+	    System.out.println(accountForms.size());
 
-	System.out.println(userProfileDtos.size());
-		accountRequestDtos.forEach(accountRequestDto -> {
-			// set user profile dto to account dto first
-			accountRequestDto.setUserProfile(userProfileDtos.removeFirst());
-			Account account = accountMapper.toAccount(accountRequestDto);
-			AccountType accountType = accountService.getAccountType(Type.findByLabel(accountRequestDto.getType()));
-			account.setAccountType(accountType);
-
-			accountService.save(account);
+		accountForms.forEach(accountForm -> {
+			registerOrUpdateService.register(accountForm);
 		});
 	}
 

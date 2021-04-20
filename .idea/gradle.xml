@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/kemis-cloud-infra" />
+            <option value="$PROJECT_DIR$/kemis-cloud-infra/admin-server" />
             <option value="$PROJECT_DIR$/kemis-cloud-infra/configuration-server" />
             <option value="$PROJECT_DIR$/kemis-cloud-infra/eureka-server" />
             <option value="$PROJECT_DIR$/kemis-cloud-infra/proxy-server" />

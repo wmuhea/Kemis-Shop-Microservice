@@ -1,9 +1,10 @@
 package com.kemisshop.catalogservice.entitiesfactory;
 
-import com.kemisshop.catalogservice.model.Category;
-import com.kemisshop.catalogservice.model.Product;
-import com.kemisshop.catalogservice.model.ProductCategory;
-import com.kemisshop.catalogservice.model.Rating;
+import com.kemisshop.catalogservice.dto.ProductDto;
+import com.kemisshop.catalogservice.domain.Category;
+import com.kemisshop.catalogservice.domain.Product;
+import com.kemisshop.catalogservice.domain.ProductCategory;
+import com.kemisshop.catalogservice.domain.Rating;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -11,20 +12,31 @@ import java.util.*;
 public class TestEntitiesFactory {
 
     public static ProductCategory buildProductCategory() {
-       return new ProductCategory(Category.Mekenet);
-
+       return new ProductCategory(Category.MEKENET);
+    }
+    public static List<ProductCategory> buildProductCategoryList() {
+        return  Arrays.asList(new ProductCategory[]{
+                    new ProductCategory(Category.MEKENET),
+                    new ProductCategory(Category.KEMIS),
+                    new ProductCategory(Category.TIGRE),
+                    new ProductCategory(Category.RAYA)
+                }
+        );
     }
     public static Product buildProductEntity() {
 
         ProductCategory pc = buildProductCategory();
         BigDecimal price = BigDecimal.valueOf(60L);
+        UUID testProductID = UUID.randomUUID();
+        UUID testSellerID = UUID.randomUUID();
+        String testProductImageName = "Yegojam Kemis_"  + testProductID + ".jpg";
+
         return Product.builder()
-                .category(pc)
                 .name("Yegojam Kemis")
-                .publicProductId(UUID.randomUUID())
+                .publicProductId(testProductID)
                 .description("It is from dembecha Gojam yebahil libs")
-                .publicSellerId(UUID.randomUUID())
-                .imageName("Ysew Kemis")
+                .publicSellerId(testSellerID)
+                .imageName(testProductImageName)
                 .unitsInStock(58)
                 .price(price)
                 .build();
@@ -96,4 +108,37 @@ public class TestEntitiesFactory {
         );
 
     }
+
+    public static ProductDto generateProductDtoFromTestProduct(Product product) {
+        return ProductDto.builder()
+                .category(product.getCategory().getCategory().name())
+                .price(product.getPrice())
+                .description(product.getDescription())
+                .publicProductId(product.getPublicProductId())
+                .publicSellerId(product.getPublicSellerId())
+                .imageName(product.getImageName())
+                .name(product.getName())
+                .unitsInStock(product.getUnitsInStock())
+                .build();
+    }
+
+    public static Product buildUpdatedProductEntity() {
+
+        ProductCategory pc = buildProductCategory();
+        BigDecimal price = BigDecimal.valueOf(65L);
+        UUID testProductID = UUID.randomUUID();
+        UUID testSellerID = UUID.randomUUID();
+        String testProductImageName = "Yegonder Kemis"  + testProductID + ".jpg";
+
+        return Product.builder()
+                .name("Yegonder Kemis")
+                .publicProductId(testProductID)
+                .description("It is from Gonder yebahil libs")
+                .publicSellerId(testSellerID)
+                .imageName(testProductImageName)
+                .unitsInStock(78)
+                .price(price)
+                .build();
+    }
 }
+
