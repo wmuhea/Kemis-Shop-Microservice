@@ -31,4 +31,6 @@ public class OrderServiceFeignClientFallback implements OrderServiceFeignClient 
         String responsePayLoadForDegradedOrderService = "It is not know if the product is ordered or not";
         return mapper.toResponseBean(HttpStatus.GATEWAY_TIMEOUT, responsePayLoadForDegradedOrderService);
     }
+
+    //
 }

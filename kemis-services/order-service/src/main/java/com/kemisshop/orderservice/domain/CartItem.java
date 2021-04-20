@@ -22,4 +22,6 @@ public class CartItem {
 
     private BigDecimal itemPrice;
 
+    //Git cherry-pick third test
+
 }
