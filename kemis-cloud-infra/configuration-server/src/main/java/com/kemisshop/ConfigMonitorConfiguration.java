@@ -12,4 +12,6 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Import(RabbitAutoConfiguration.class)
 public class ConfigMonitorConfiguration {
+
+    //Git cherry-pick third test
 }
